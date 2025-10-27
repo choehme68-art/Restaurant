@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -84,23 +85,30 @@
             transform: translateY(-50%) translateY(-1px);
         }
 
-        .maps-container {
+        .navigation-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             left: 20px;
-            width: 200px;
-            height: 150px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
             border: 2px solid #27ae60;
             border-radius: 8px;
-            overflow: hidden;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
             box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+            text-decoration: none;
+            color: #2c5530;
+            font-weight: bold;
         }
 
-        .maps-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .navigation-btn:hover {
+            background: #f0f7f0;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+            transform: translateY(-50%) translateY(-1px);
         }
 
         .lang-icon {
@@ -130,6 +138,10 @@
             outline: none;
             padding: 0;
             padding-right: 5px;
+            /* Entfernt den zweiten Pfeil */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         .lang-select option {
@@ -721,12 +733,16 @@
                 margin-right: 0;
             }
 
-            .maps-container {
+            .navigation-btn {
                 position: static;
                 transform: none;
-                width: 100%;
-                height: 200px;
-                margin: 15px 0;
+                margin: 15px auto;
+                width: fit-content;
+                justify-content: center;
+            }
+
+            .navigation-btn:hover {
+                transform: none;
             }
 
             .language-switcher {
@@ -734,6 +750,7 @@
                 transform: none;
                 margin: 15px auto;
                 width: fit-content;
+                justify-content: center;
             }
 
             .language-switcher:hover {
@@ -843,14 +860,12 @@
 
     <div class="container">
         <header>
-            <div class="maps-container">
-                <iframe 
-                    src="https://maps.google.com/maps?q=Weststrasse+181,+44866+Bochum+Wattenscheid&output=embed"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+            <a href="https://maps.google.com/maps?q=Weststrasse+181,+44866+Bochum+Wattenscheid" 
+               target="_blank" 
+               class="navigation-btn">
+                <span>🗺️</span>
+                <span>Zum Restaurant navigieren</span>
+            </a>
             <div class="language-switcher">
                 <span class="lang-icon">🌐</span>
                 <span class="lang-label" id="langLabel">Sprache</span>
@@ -996,7 +1011,7 @@
             de: {
                 welcome: "Willkommen zu unserer digitalen Speisekarte",
                 delivery: "🚗 Lieferung möglich",
-                searchPlaceholder: "Gerichte durchsuchen...",
+                searchPlaceholder: "Gerichte suchen...",
                 allCategories: "Alle Kategorien",
                 pizza: "Pizza",
                 pasta: "Nudeln",
@@ -1027,7 +1042,8 @@
                 pleaseSelectSize: "Bitte Größe wählen",
                 allSpecialWishes: "Alle Sonderwünsche",
                 vegetarian: "Vegetarisch",
-                spicy: "Scharf"
+                spicy: "Scharf",
+                navigate: "Zum Restaurant navigieren"
             },
             en: {
                 welcome: "Welcome to our digital menu",
@@ -1063,7 +1079,8 @@
                 pleaseSelectSize: "Please select a size",
                 allSpecialWishes: "All Special Wishes",
                 vegetarian: "Vegetarian",
-                spicy: "Spicy"
+                spicy: "Spicy",
+                navigate: "Navigate to restaurant"
             },
             tr: {
                 welcome: "Dijital menümüze hoş geldiniz",
@@ -1099,7 +1116,8 @@
                 pleaseSelectSize: "Lütfen bir boyut seçin",
                 allSpecialWishes: "Tüm Özel İstekler",
                 vegetarian: "Vejetaryen",
-                spicy: "Acılı"
+                spicy: "Acılı",
+                navigate: "Restorana git"
             },
             ar: {
                 welcome: "مرحبًا بكم في قائمتنا الرقمية",
@@ -1135,7 +1153,8 @@
                 pleaseSelectSize: "يرجى اختيار حجم",
                 allSpecialWishes: "جميع الرغبات الخاصة",
                 vegetarian: "نباتي",
-                spicy: "حار"
+                spicy: "حار",
+                navigate: "التوجه إلى المطعم"
             },
             ru: {
                 welcome: "Добро пожаловать в наше цифровое меню",
@@ -1171,7 +1190,8 @@
                 pleaseSelectSize: "Пожалуйста, выберите размер",
                 allSpecialWishes: "Все особые пожелания",
                 vegetarian: "Вегетарианское",
-                spicy: "Острое"
+                spicy: "Острое",
+                navigate: "Навигация в ресторан"
             }
         };
 
@@ -1498,6 +1518,10 @@
             specialWishesFilter.options[0].text = t('allSpecialWishes');
             specialWishesFilter.options[1].text = t('vegetarian');
             specialWishesFilter.options[2].text = t('spicy');
+            
+            // Navigations-Button übersetzen
+            const navigationBtn = document.querySelector('.navigation-btn');
+            navigationBtn.innerHTML = `<span>🗺️</span><span>${t('navigate')}</span>`;
             
             updateCartTotal();
         }
